@@ -1,0 +1,49 @@
+{
+    "test_samples": 1000,
+    "baseline": {
+        "model_name": "distilbert-base-uncased (Untuned Head)",
+        "accuracy": 0.4,
+        "precision": 0.4091,
+        "recall": 0.45,
+        "f1_score": 0.4286,
+        "confusion_matrix": [
+            [
+                175,
+                325
+            ],
+            [
+                275,
+                225
+            ]
+        ],
+        "tn": 175,
+        "fp": 325,
+        "fn": 275,
+        "tp": 225
+    },
+    "finetuned": {
+        "model_name": "Fine-Tuned DistilBERT (IMDb Adapted)",
+        "accuracy": 0.841,
+        "precision": 0.8683,
+        "recall": 0.804,
+        "f1_score": 0.8349,
+        "confusion_matrix": [
+            [
+                439,
+                61
+            ],
+            [
+                98,
+                402
+            ]
+        ],
+        "tn": 439,
+        "fp": 61,
+        "fn": 98,
+        "tp": 402
+    },
+    "delta": {
+        "accuracy_gain": 0.441,
+        "f1_gain": 0.4063
+    }
+}

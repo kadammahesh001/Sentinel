@@ -1,0 +1,39 @@
+{
+    "model_name": "distilbert/distilbert-base-uncased",
+    "base_architecture": "DistilBertForSequenceClassification",
+    "train_samples": 2000,
+    "val_samples": 500,
+    "test_samples": 1000,
+    "epochs": 2,
+    "batch_size": 16,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "max_sequence_length": 128,
+    "device": "mps",
+    "seed": 42,
+    "total_training_time_seconds": 91.51,
+    "total_training_time_minutes": 1.53,
+    "best_val_f1": 0.8195,
+    "history": {
+        "epoch": [
+            1,
+            2
+        ],
+        "train_loss": [
+            0.5638308272361755,
+            0.34278532552719115
+        ],
+        "val_loss": [
+            0.43171695433557034,
+            0.401842926396057
+        ],
+        "val_accuracy": [
+            0.798,
+            0.822
+        ],
+        "val_f1": [
+            0.7799564270152506,
+            0.8194726166328601
+        ]
+    }
+}

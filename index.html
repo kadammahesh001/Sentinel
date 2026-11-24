@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Intelligence — Fine-Tuned DistilBERT | Mahesh Kadam</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans, Outfit & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Cyber Luxe CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Chart.js 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- ==========================================================================
+         TOP NAVBAR & TELEMETRY STRIP
+         ========================================================================== -->
+    <nav class="navbar navbar-expand-xl custom-nav">
+        <div class="container-fluid px-3 px-lg-4">
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="#">
+                <div class="brand-icon-wrapper">
+                    <i class="bi bi-cpu-fill"></i>
+                </div>
+                <div>
+                    <div class="brand-title">SENTINEL-NLP // DISTILBERT</div>
+                    <div class="brand-subtitle">DistilBERT Review Intelligence &bull; Pretrained Transformer Adaptation</div>
+                </div>
+            </a>
+
+            <!-- Candidate Badge & Telemetry -->
+            <div class="d-flex align-items-center flex-wrap gap-2 gap-lg-3 mt-2 mt-xl-0 ms-auto">
+                <!-- Verified Candidate Pill -->
+                <div class="student-pill" title="Candidate Credentials">
+                    <span class="avatar-dot"></span>
+                    <i class="bi bi-person-badge-fill text-info"></i>
+                    <span><strong>Mahesh Kadam</strong> (Roll: <strong>51</strong>)</span>
+                    <span class="text-secondary d-none d-md-inline">&bull;</span>
+                    <span class="text-secondary d-none d-md-inline">PRN: <code class="text-info">202401120074</code></span>
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill ms-1 d-none d-sm-inline">MITAOE</span>
+                </div>
+
+                <!-- Hardware & Live Status -->
+                <div class="telemetry-chip telemetry-live d-none d-md-flex">
+                    <i class="bi bi-broadcast"></i>
+                    <span>MPS / ACCELERATED</span>
+                </div>
+
+                <div class="telemetry-chip telemetry-metrics d-none d-lg-flex">
+                    <i class="bi bi-bullseye"></i>
+                    <span>ACC: <strong>84.10%</strong> | F1: <strong>0.8349</strong></span>
+                </div>
+
+                <!-- Disclaimer Modal Trigger -->
+                <button class="btn btn-cyber-outline btn-sm" data-bs-toggle="modal" data-bs-target="#disclaimerModal">
+                    <i class="bi bi-shield-check"></i> <span class="d-none d-sm-inline">Ethics & Info</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================================================
+         MAIN WRAPPER
+         ========================================================================== -->
+    <div class="container-fluid px-3 px-lg-4 py-4 main-content">
+
+        <!-- Command Dock Tabs -->
+        <div class="command-dock-wrapper">
+            <ul class="nav command-dock" id="command-pills" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pill-inference-tab" data-bs-toggle="pill" data-bs-target="#pill-inference" type="button" role="tab">
+                        <i class="bi bi-lightning-charge-fill"></i> Neural Inference <span class="d-none">Live Review Analysis</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pill-batch-tab" data-bs-toggle="pill" data-bs-target="#pill-batch" type="button" role="tab">
+                        <i class="bi bi-layers-fill"></i> Batch CSV Pipeline <span class="d-none">Batch CSV Intelligence</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pill-benchmark-tab" data-bs-toggle="pill" data-bs-target="#pill-benchmark" type="button" role="tab">
+                        <i class="bi bi-graph-up-arrow"></i> Empirical Benchmark
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pill-viva-tab" data-bs-toggle="pill" data-bs-target="#pill-viva" type="button" role="tab">
+                        <i class="bi bi-journal-code"></i> Architecture & Viva Guide
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pill-tokens-tab" data-bs-toggle="pill" data-bs-target="#pill-tokens" type="button" role="tab">
+                        <i class="bi bi-search"></i> Token Attention & Ethics
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tab Content Areas -->
+        <div class="tab-content" id="command-tabContent">
+
+            <!-- ==========================================================================
+                 TAB 1: REAL-TIME NEURAL INFERENCE
+                 ========================================================================== -->
+            <div class="tab-pane fade show active fade-in-up" id="pill-inference" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Left: Review Input Console -->
+                    <div class="col-xl-7">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-terminal-split"></i> Review Ingestion Console
+                                </h3>
+                                <span class="telemetry-chip telemetry-metrics" id="char-counter">0 chars / 0 words</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-secondary small mb-3">
+                                    Pass arbitrary English review text through the fine-tuned <strong>DistilBERT</strong> transformer backbone (`distilbert-base-uncased`, 66.9M params). Sub-word tokenization and classification head logits are computed in real time.
+                                </p>
+
+                                <!-- Pre-configured Sample Chips -->
+                                <div class="mb-3">
+                                    <div class="text-muted small text-uppercase fw-bold mb-2 font-monospace" style="font-size: 0.72rem;">
+                                        <i class="bi bi-stars text-warning me-1"></i> Quick Load Curated Samples:
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button class="sample-chip chip-pos" onclick="loadSample('pos1')">
+                                            <i class="bi bi-hand-thumbs-up-fill"></i> Masterpiece
+                                        </button>
+                                        <button class="sample-chip chip-neg" onclick="loadSample('neg1')">
+                                            <i class="bi bi-hand-thumbs-down-fill"></i> Critical Disaster
+                                        </button>
+                                        <button class="sample-chip chip-mixed" onclick="loadSample('mixed1')">
+                                            <i class="bi bi-yin-yang"></i> Nuanced Mixed
+                                        </button>
+                                        <button class="sample-chip chip-sarcastic" onclick="loadSample('sarcastic1')">
+                                            <i class="bi bi-mask"></i> Sarcastic Irony
+                                        </button>
+                                        <button class="sample-chip chip-pos" onclick="loadSample('pos2')">
+                                            <i class="bi bi-camera-reels-fill"></i> Classic Noir
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Textarea Input -->
+                                <div class="mb-3 position-relative">
+                                    <textarea id="review-input" class="form-control cyber-textarea" placeholder="Paste or type movie critique here... (e.g. 'A breathtaking visual spectacle with an emotionally resonant score and brilliant acting.')"></textarea>
+                                    <div id="input-alert" class="alert alert-danger py-2 px-3 small mt-2 d-none" role="alert"></div>
+                                </div>
+
+                                <!-- Control Buttons -->
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2">
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-cyber-outline btn-sm" onclick="clearInput()">
+                                            <i class="bi bi-trash3"></i> Clear
+                                        </button>
+                                        <button class="btn btn-cyber-outline btn-sm" onclick="loadRandomSample()">
+                                            <i class="bi bi-shuffle"></i> Random
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-cyber-primary" id="btn-predict" onclick="runSinglePrediction()">
+                                        <span id="predict-spinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                        <i class="bi bi-lightning-charge-fill" id="predict-icon"></i>
+                                        <span>Analyze Review</span>
+                                        <span class="badge bg-black bg-opacity-25 ms-1 font-monospace text-info d-none d-sm-inline" style="font-size: 0.72rem;">Ctrl+Enter</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Classification Telemetry & Verdict -->
+                    <div class="col-xl-5">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-speedometer2"></i> Classification Telemetry
+                                </h3>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill font-monospace" id="latency-chip">
+                                    <i class="bi bi-clock-history me-1"></i> Ready
+                                </span>
+                            </div>
+                            <div class="p-4 text-center">
+
+                                <!-- Gauge Visualizer -->
+                                <div class="gauge-wrapper">
+                                    <svg class="gauge-svg" viewBox="0 0 200 110">
+                                        <!-- Background Arc -->
+                                        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="16" stroke-linecap="round"/>
+                                        <!-- Active Color Arc -->
+                                        <path id="gauge-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gauge-gradient)" stroke-width="16" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="125.6"/>
+                                        <defs>
+                                            <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#ff3366"/>
+                                                <stop offset="50%" stop-color="#ffb703"/>
+                                                <stop offset="100%" stop-color="#00f5a0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Needle Indicator -->
+                                        <line id="gauge-needle" x1="100" y1="100" x2="100" y2="35" stroke="#00f0ff" stroke-width="3" stroke-linecap="round" style="transform-origin: 100px 100px; transform: rotate(0deg); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);"/>
+                                        <circle cx="100" cy="100" r="7" fill="#00f0ff" stroke="#05070d" stroke-width="2"/>
+                                    </svg>
+                                </div>
+
+                                <!-- Dynamic Verdict Badge -->
+                                <div id="verdict-container" class="mb-3">
+                                    <div class="verdict-badge-box verdict-pos" id="verdict-badge">
+                                        <i class="bi bi-stars" id="verdict-icon"></i>
+                                        <span id="verdict-text">Awaiting Query</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="badge bg-secondary-subtle text-secondary font-monospace" id="confidence-subtext" style="font-size: 0.8rem;">
+                                            Select a sample or submit text to infer
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Softmax Probability Meters -->
+                                <div class="prob-meter-box text-start mt-3">
+                                    <div class="prob-meter-label">
+                                        <span class="text-success"><i class="bi bi-arrow-up-circle-fill me-1"></i> Positive Probability</span>
+                                        <span class="font-monospace fw-bold text-success" id="prob-pos-val">0.00%</span>
+                                    </div>
+                                    <div class="prob-progress">
+                                        <div class="prob-bar-pos" id="prob-pos-bar" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="prob-meter-box text-start">
+                                    <div class="prob-meter-label">
+                                        <span class="text-danger"><i class="bi bi-arrow-down-circle-fill me-1"></i> Negative Probability</span>
+                                        <span class="font-monospace fw-bold text-danger" id="prob-neg-val">0.00%</span>
+                                    </div>
+                                    <div class="prob-progress">
+                                        <div class="prob-bar-neg" id="prob-neg-bar" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Telemetry Grid -->
+                                <div class="telemetry-grid">
+                                    <div class="telemetry-item">
+                                        <div class="telemetry-item-label">Inference Latency</div>
+                                        <div class="telemetry-item-value text-info" id="telemetry-latency">-- ms</div>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <div class="telemetry-item-label">Model Confidence</div>
+                                        <div class="telemetry-item-value text-warning" id="telemetry-conf">-- %</div>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <div class="telemetry-item-label">Tokens Processed</div>
+                                        <div class="telemetry-item-value text-primary" id="telemetry-tokens">--</div>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <div class="telemetry-item-label">Logit Margin (&Delta;z)</div>
+                                        <div class="telemetry-item-value text-success" id="telemetry-margin">--</div>
+                                    </div>
+                                </div>
+
+                                <!-- Ethical Probability Disclaimer Callout -->
+                                <div class="text-start mt-3 p-3 rounded-3" style="background: rgba(255, 183, 3, 0.08); border-left: 3px solid #ffb703;">
+                                    <div class="small text-warning fw-semibold mb-1">
+                                        <i class="bi bi-info-circle-fill me-1"></i> Probability Calibration Notice:
+                                    </div>
+                                    <div class="text-secondary" style="font-size: 0.76rem; line-height: 1.5;">
+                                        Softmax probability represents statistical alignment with IMDb review representations, not factual verification. High confidence reflects token correlation within the fine-tuned feature space.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Ledger Table -->
+                <div class="cyber-card mt-4">
+                    <div class="card-header-cyber">
+                        <h4 class="card-title-cyber">
+                            <i class="bi bi-clock-history"></i> Session Inference Audit Ledger
+                        </h4>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-cyber-outline btn-sm" onclick="exportSessionCSV()">
+                                <i class="bi bi-download"></i> Export Session
+                            </button>
+                            <button class="btn btn-cyber-outline btn-sm" onclick="clearSessionHistory()">
+                                <i class="bi bi-trash"></i> Reset Ledger
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 280px;">
+                        <table class="cyber-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Time</th>
+                                    <th>Review Excerpt</th>
+                                    <th style="width: 140px;">Classification</th>
+                                    <th style="width: 120px;">Confidence</th>
+                                    <th style="width: 100px;">Latency</th>
+                                    <th style="width: 90px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="session-history-body">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox me-1"></i> No inference history in this session yet. Run an analysis above.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================================================
+                 TAB 2: BATCH CSV PIPELINE
+                 ========================================================================== -->
+            <div class="tab-pane fade fade-in-up" id="pill-batch" role="tabpanel">
+                <div class="row g-4">
+                    <!-- CSV Dropzone & Configuration -->
+                    <div class="col-xl-4">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-file-earmark-arrow-up"></i> Upload Batch Dataset
+                                </h3>
+                            </div>
+                            <div class="p-4">
+                                <div class="cyber-dropzone" id="csv-dropzone" onclick="document.getElementById('csv-file-input').click()">
+                                    <input type="file" id="csv-file-input" class="d-none" accept=".csv">
+                                    <div class="dropzone-icon">
+                                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                                    </div>
+                                    <h5 class="fw-bold text-white mb-2" id="dropzone-label">Select or Drop CSV File</h5>
+                                    <p class="text-secondary small mb-3">
+                                        Supports files up to 16 MB. Auto-detects text columns (<code>text</code>, <code>review</code>, <code>comment</code>).
+                                    </p>
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle font-monospace" id="file-status-badge">
+                                        Ready for File
+                                    </span>
+                                </div>
+
+                                <div class="d-grid gap-2 mt-4">
+                                    <button class="btn btn-cyber-primary" id="btn-batch-process" onclick="processBatchCSV()" disabled>
+                                        <span id="batch-spinner" class="spinner-border spinner-border-sm d-none"></span>
+                                        <i class="bi bi-cpu-fill" id="batch-icon"></i>
+                                        <span>Execute Batch Inference</span>
+                                    </button>
+                                    <a href="/api/download-sample-csv" class="btn btn-cyber-outline text-center">
+                                        <i class="bi bi-download"></i> Download Viva Sample CSV
+                                    </a>
+                                </div>
+
+                                <div class="p-3 mt-3 rounded-3" style="background: rgba(99, 102, 241, 0.08); border-left: 3px solid #6366f1;">
+                                    <div class="small fw-bold text-info mb-1">
+                                        <i class="bi bi-lightning-charge-fill me-1"></i> Batched Acceleration:
+                                    </div>
+                                    <div class="text-secondary" style="font-size: 0.78rem;">
+                                        Inference runs in parallel mini-batches of 32 on the local compute engine, achieving high throughput sequence classification.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Batch Visual Analytics & KPI Cards -->
+                    <div class="col-xl-8">
+                        <!-- 4 Stat KPI Cards -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="stat-cyber-card">
+                                    <div class="stat-cyber-label">
+                                        <span>Total Reviews</span>
+                                        <i class="bi bi-file-text text-info"></i>
+                                    </div>
+                                    <div class="stat-cyber-value" id="kpi-batch-total">0</div>
+                                    <span class="stat-cyber-delta delta-neutral">Ingested</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="stat-cyber-card">
+                                    <div class="stat-cyber-label">
+                                        <span>Positive Rate</span>
+                                        <i class="bi bi-hand-thumbs-up text-success"></i>
+                                    </div>
+                                    <div class="stat-cyber-value text-success" id="kpi-batch-pos">0%</div>
+                                    <span class="stat-cyber-delta delta-positive" id="kpi-batch-pos-count">0 reviews</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="stat-cyber-card">
+                                    <div class="stat-cyber-label">
+                                        <span>Negative Rate</span>
+                                        <i class="bi bi-hand-thumbs-down text-danger"></i>
+                                    </div>
+                                    <div class="stat-cyber-value text-danger" id="kpi-batch-neg">0%</div>
+                                    <span class="stat-cyber-delta delta-neutral" id="kpi-batch-neg-count">0 reviews</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="stat-cyber-card">
+                                    <div class="stat-cyber-label">
+                                        <span>Avg Confidence</span>
+                                        <i class="bi bi-graph-up text-warning"></i>
+                                    </div>
+                                    <div class="stat-cyber-value text-warning" id="kpi-batch-conf">0%</div>
+                                    <span class="stat-cyber-delta delta-positive">Calibrated</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dual Batch Charts -->
+                        <div class="row g-3">
+                            <div class="col-md-5">
+                                <div class="cyber-card p-3 h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-white small fw-bold font-monospace">POLARITY SPLIT</span>
+                                        <i class="bi bi-pie-chart text-info"></i>
+                                    </div>
+                                    <div style="height: 200px; position: relative;">
+                                        <canvas id="batchPolarityChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="cyber-card p-3 h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-white small fw-bold font-monospace">CONFIDENCE DISTRIBUTION</span>
+                                        <i class="bi bi-bar-chart-fill text-info"></i>
+                                    </div>
+                                    <div style="height: 200px; position: relative;">
+                                        <canvas id="batchConfidenceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Batch Enriched Results Matrix Table -->
+                <div class="cyber-card mt-4">
+                    <div class="card-header-cyber flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <h4 class="card-title-cyber">
+                                <i class="bi bi-table"></i> Enriched Prediction Matrix
+                            </h4>
+                            <span class="badge bg-dark-subtle text-light border border-secondary-subtle font-monospace" id="batch-row-count">
+                                0 records loaded
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <!-- Filter Pills -->
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-cyber-outline active" onclick="filterBatchTable('all')" id="filter-btn-all">All</button>
+                                <button type="button" class="btn btn-cyber-outline" onclick="filterBatchTable('positive')" id="filter-btn-pos">Positive</button>
+                                <button type="button" class="btn btn-cyber-outline" onclick="filterBatchTable('negative')" id="filter-btn-neg">Negative</button>
+                            </div>
+                            <input type="text" id="batch-search-input" class="form-control form-control-sm cyber-textarea" placeholder="Search text..." style="min-height: auto; width: 180px; padding: 6px 12px;" oninput="searchBatchTable()">
+                            <button class="btn btn-cyber-primary btn-sm" onclick="exportEnrichedCSV()">
+                                <i class="bi bi-file-earmark-arrow-down"></i> Export Enriched CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 380px;">
+                        <table class="cyber-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 70px;">ID</th>
+                                    <th>Review Content</th>
+                                    <th style="width: 140px;">Predicted Sentiment</th>
+                                    <th style="width: 130px;">Confidence</th>
+                                    <th style="width: 110px;">Pos Prob</th>
+                                    <th style="width: 110px;">Neg Prob</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batch-table-body">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">
+                                        <i class="bi bi-cloud-upload me-1"></i> Upload a CSV above or download sample to inspect batch results.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================================================
+                 TAB 3: EMPIRICAL BENCHMARK & HELD-OUT EVALUATION
+                 ========================================================================== -->
+            <div class="tab-pane fade fade-in-up" id="pill-benchmark" role="tabpanel">
+                <!-- Top Summary Alert -->
+                <div class="p-3 mb-4 rounded-3 d-flex align-items-center justify-content-between flex-wrap gap-2" style="background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25);">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-check-circle-fill text-info fs-3"></i>
+                        <div>
+                            <div class="fw-bold text-white">Empirical Benchmark on Held-Out Test Split (N = 1,000 Balanced Reviews)</div>
+                            <div class="text-secondary small">Evaluated identically against the untrained baseline checkpoint with zero data leakage. Candidate: <strong>Mahesh Kadam (Roll 51)</strong>.</div>
+                        </div>
+                    </div>
+                    <span class="badge bg-success text-dark fw-bold px-3 py-2 font-monospace fs-6">
+                        +44.10% ACCURACY LIFT
+                    </span>
+                </div>
+
+                <!-- 4 Delta KPI Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="stat-cyber-card">
+                            <div class="stat-cyber-label">
+                                <span>Held-Out Accuracy</span>
+                                <i class="bi bi-bullseye text-info"></i>
+                            </div>
+                            <div class="stat-cyber-value text-white">84.10%</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Baseline: 40.00%</span>
+                                <span class="stat-cyber-delta delta-positive">+44.10% LIFT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="stat-cyber-card">
+                            <div class="stat-cyber-label">
+                                <span>F1-Score (Binary)</span>
+                                <i class="bi bi-award text-success"></i>
+                            </div>
+                            <div class="stat-cyber-value text-success">0.8349</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Baseline: 0.4286</span>
+                                <span class="stat-cyber-delta delta-positive">+0.4063 LIFT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="stat-cyber-card">
+                            <div class="stat-cyber-label">
+                                <span>Specificity (TNR)</span>
+                                <i class="bi bi-shield-shaded text-primary"></i>
+                            </div>
+                            <div class="stat-cyber-value text-primary">87.80%</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Baseline: 35.00%</span>
+                                <span class="stat-cyber-delta delta-positive">+52.80% LIFT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="stat-cyber-card">
+                            <div class="stat-cyber-label">
+                                <span>Sensitivity (Recall)</span>
+                                <i class="bi bi-activity text-warning"></i>
+                            </div>
+                            <div class="stat-cyber-value text-warning">80.40%</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Baseline: 45.00%</span>
+                                <span class="stat-cyber-delta delta-positive">+35.40% LIFT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Left: Comparative Metrics Matrix Table -->
+                    <div class="col-lg-7">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-layout-text-window-reverse"></i> Comparative Benchmark Matrix
+                                </h3>
+                                <span class="telemetry-chip telemetry-metrics">N = 1,000 Samples</span>
+                            </div>
+                            <div class="p-3">
+                                <table class="cyber-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Evaluation Metric</th>
+                                            <th>Untuned Baseline</th>
+                                            <th>Fine-Tuned Checkpoint</th>
+                                            <th>Delta Lift</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Accuracy</strong></td>
+                                            <td class="font-monospace text-secondary">40.00%</td>
+                                            <td class="font-monospace fw-bold text-success">84.10%</td>
+                                            <td><span class="badge badge-pos">+44.10%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Precision (Positive Class)</strong></td>
+                                            <td class="font-monospace text-secondary">0.4091</td>
+                                            <td class="font-monospace fw-bold text-info">0.8683</td>
+                                            <td><span class="badge badge-pos">+0.4592</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Recall / Sensitivity</strong></td>
+                                            <td class="font-monospace text-secondary">0.4500</td>
+                                            <td class="font-monospace fw-bold text-info">0.8040</td>
+                                            <td><span class="badge badge-pos">+0.3540</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Binary F1-Score</strong></td>
+                                            <td class="font-monospace text-secondary">0.4286</td>
+                                            <td class="font-monospace fw-bold text-success">0.8349</td>
+                                            <td><span class="badge badge-pos">+0.4063</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Macro Average F1</strong></td>
+                                            <td class="font-monospace text-secondary">0.3888</td>
+                                            <td class="font-monospace fw-bold text-info">0.8409</td>
+                                            <td><span class="badge badge-pos">+0.4521</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Specificity (True Neg Rate)</strong></td>
+                                            <td class="font-monospace text-secondary">35.00%</td>
+                                            <td class="font-monospace fw-bold text-primary">87.80%</td>
+                                            <td><span class="badge badge-pos">+52.80%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Cross-Entropy Test Loss</strong></td>
+                                            <td class="font-monospace text-secondary">0.6974</td>
+                                            <td class="font-monospace fw-bold text-warning">0.3812</td>
+                                            <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle">-0.3162 (&darr;)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Trainable Parameters</strong></td>
+                                            <td class="font-monospace text-secondary">66,955,010</td>
+                                            <td class="font-monospace text-info">66,955,010</td>
+                                            <td><span class="badge bg-secondary-subtle text-secondary">All Layers Tuned</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Interactive Confusion Matrix -->
+                    <div class="col-lg-5">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-grid-3x3-gap-fill"></i> Held-Out Confusion Matrix
+                                </h3>
+                                <span class="badge bg-dark-subtle text-light border border-secondary-subtle font-monospace">
+                                    500 Neg / 500 Pos
+                                </span>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-secondary small mb-3">
+                                    Real test distribution breakdown across the 1,000 held-out samples. Click on any quadrant to examine diagnostic insights:
+                                </p>
+
+                                <div class="cm-grid">
+                                    <!-- True Negative -->
+                                    <div class="cm-cell tn" onclick="showCMDetails('tn')">
+                                        <div class="cm-val text-success">439</div>
+                                        <div class="cm-lbl">True Negatives (TN)</div>
+                                        <div class="text-muted small mt-1" style="font-size: 0.7rem;">Correct Negative Predictions</div>
+                                    </div>
+                                    <!-- False Positive -->
+                                    <div class="cm-cell fp" onclick="showCMDetails('fp')">
+                                        <div class="cm-val text-danger">61</div>
+                                        <div class="cm-lbl">False Positives (FP)</div>
+                                        <div class="text-muted small mt-1" style="font-size: 0.7rem;">Type I Error (Sarcasm/Jargon)</div>
+                                    </div>
+                                    <!-- False Negative -->
+                                    <div class="cm-cell fn" onclick="showCMDetails('fn')">
+                                        <div class="cm-val text-warning">98</div>
+                                        <div class="cm-lbl">False Negatives (FN)</div>
+                                        <div class="text-muted small mt-1" style="font-size: 0.7rem;">Type II Error (Subtle Praise)</div>
+                                    </div>
+                                    <!-- True Positive -->
+                                    <div class="cm-cell tp" onclick="showCMDetails('tp')">
+                                        <div class="cm-val text-success">402</div>
+                                        <div class="cm-lbl">True Positives (TP)</div>
+                                        <div class="text-muted small mt-1" style="font-size: 0.7rem;">Correct Positive Predictions</div>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Quadrant Detail Box -->
+                                <div id="cm-detail-box" class="mt-4 p-3 rounded-3" style="background: rgba(13, 20, 36, 0.9); border: 1px solid var(--border-subtle);">
+                                    <div class="small fw-bold text-info mb-1" id="cm-detail-title">
+                                        <i class="bi bi-info-circle-fill me-1"></i> Quadrant Diagnostic Guide
+                                    </div>
+                                    <div class="text-secondary small" id="cm-detail-desc" style="line-height: 1.6;">
+                                        Click on any of the four matrix cells above to inspect why the fine-tuned model classified samples into that quadrant.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plot Visualizer Gallery -->
+                <div class="cyber-card mt-4">
+                    <div class="card-header-cyber flex-wrap gap-2">
+                        <h4 class="card-title-cyber">
+                            <i class="bi bi-images"></i> Empirical Benchmark Plot Showcase
+                        </h4>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-cyber-outline active" onclick="switchPlot('metrics')" id="btn-plot-metrics">Comparative Metrics Bar Chart</button>
+                            <button class="btn btn-cyber-outline" onclick="switchPlot('curves')" id="btn-plot-curves">Loss & Convergence Curves</button>
+                        </div>
+                    </div>
+                    <div class="p-4 text-center">
+                        <img id="benchmark-img" src="/static/img/metrics_comparison.png" alt="Benchmark Plots" class="img-fluid rounded-3 border border-secondary-subtle shadow" style="max-height: 480px;">
+                        <div class="mt-2 text-muted small" id="benchmark-img-caption">
+                            Figure 1: Side-by-side empirical performance comparison across Accuracy, Precision, Recall, F1, Specificity, and Sensitivity.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================================================
+                 TAB 4: ARCHITECTURE & COMPREHENSIVE VIVA GUIDE
+                 ========================================================================== -->
+            <div class="tab-pane fade fade-in-up" id="pill-viva" role="tabpanel">
+                <div class="row g-4 mb-4">
+                    <!-- DistilBERT Architecture Specs Card -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-diagram-3-fill"></i> DistilBERT Transformer Architecture
+                                </h3>
+                                <span class="badge bg-info-subtle text-info border border-info-subtle font-monospace">Hugging Face</span>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-3 text-secondary small">
+                                    DistilBERT is a student encoder network trained via <strong>Knowledge Distillation</strong> on BERT-base. It removes token-type embeddings and the pooler while retaining bidirectional self-attention.
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="cyber-table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-secondary">Base Checkpoint</td>
+                                                <td class="font-monospace text-info">distilbert/distilbert-base-uncased</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Transformer Layers</td>
+                                                <td class="font-monospace text-white">6 Encoder Blocks (BERT: 12)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Self-Attention Heads</td>
+                                                <td class="font-monospace text-white">12 Multi-Head Attention heads</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Hidden State Vector (\(d_{model}\))</td>
+                                                <td class="font-monospace text-white">768 dimensions</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Feed-Forward Intermediate Dim</td>
+                                                <td class="font-monospace text-white">3,072 dimensions</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Vocabulary Size</td>
+                                                <td class="font-monospace text-white">30,522 WordPiece Tokens</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Total Parameters</td>
+                                                <td class="font-monospace text-success">~66.95 Million (40% smaller than BERT)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Inference Latency</td>
+                                                <td class="font-monospace text-success">~60% faster throughput than BERT-base</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Protocol & Loss Formulation Card -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-gear-wide-connected"></i> Adaptation & Fine-Tuning Recipe
+                                </h3>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle font-monospace">Stratified</span>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-3 text-secondary small">
+                                    Supervised fine-tuning maps the extracted <code>[CLS]</code> token representation through a customized sequence classification head:
+                                </div>
+                                <div class="p-3 mb-3 rounded-3 font-monospace small" style="background: rgba(10, 16, 30, 0.9); border: 1px solid var(--border-subtle); color: #93c5fd;">
+                                    [CLS] Vector (768)<br>
+                                    &nbsp;&nbsp;&darr;<br>
+                                    Linear(768 &rarr; 768) + ReLU<br>
+                                    &nbsp;&nbsp;&darr;<br>
+                                    Dropout(p = 0.2)<br>
+                                    &nbsp;&nbsp;&darr;<br>
+                                    Linear(768 &rarr; 2) [Logits \(z_0, z_1\)]
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="cyber-table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-secondary">Optimizer & LR</td>
+                                                <td class="font-monospace text-white">AdamW (\(\alpha = 2 \times 10^{-5}\), weight decay 0.01)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Learning Rate Schedule</td>
+                                                <td class="font-monospace text-white">Linear warmup (25 steps) & linear decay</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Batch Size</td>
+                                                <td class="font-monospace text-white">16 (Train) / 32 (Validation & Test)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Data Splits (Seed 42)</td>
+                                                <td class="font-monospace text-white">Train: 2,000 | Val: 500 | Held-Out Test: 1,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-secondary">Hardware Device</td>
+                                                <td class="font-monospace text-info">Apple Silicon MPS / CUDA Accelerated</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comprehensive Viva Voce Questions Database (Searchable) -->
+                <div class="cyber-card">
+                    <div class="card-header-cyber flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <h4 class="card-title-cyber">
+                                <i class="bi bi-question-diamond-fill text-warning"></i> Comprehensive Viva Voce Examiner Prep (32 Q&As)
+                            </h4>
+                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle font-monospace">Full Syllabus</span>
+                        </div>
+                        <input type="text" id="viva-search-input" class="form-control form-control-sm cyber-textarea" placeholder="Filter questions by keyword (e.g. loss, attention, leakage)..." style="min-height: auto; width: 280px; padding: 6px 14px;" oninput="searchVivaQuestions()">
+                    </div>
+                    <div class="p-4">
+                        <div class="accordion cyber-accordion" id="vivaAccordion">
+
+                            <!-- Q1 -->
+                            <div class="accordion-item viva-item" data-keywords="distilbert knowledge distillation student teacher bert compression">
+                                <h2 class="accordion-header" id="vq-h1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c1">
+                                        Q1: What is DistilBERT and how does Knowledge Distillation work?
+                                    </button>
+                                </h2>
+                                <div id="vq-c1" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        DistilBERT (Sanh et al., 2019) is a distilled, compact language model that retains 97% of BERT-base's language understanding with 40% fewer parameters and 60% faster inference. Knowledge Distillation trains a compact "student" network (6 layers) under the supervision of a larger "teacher" network (12 layers) using a triple loss function: soft cross-entropy on temperature-softened probabilities (\(\mathcal{L}_{ce}\)), masked language modeling loss (\(\mathcal{L}_{mlm}\)), and cosine hidden state distance (\(\mathcal{L}_{cos}\)).
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q2 -->
+                            <div class="accordion-item viva-item" data-keywords="self attention transformer formula query key value multihead">
+                                <h2 class="accordion-header" id="vq-h2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c2">
+                                        Q2: How does the Self-Attention mechanism operate mathematically?
+                                    </button>
+                                </h2>
+                                <div id="vq-c2" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        Scaled Dot-Product Attention is formulated as: 
+                                        $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+                                        The query (\(Q\)) and key (\(K\)) projections determine pairwise token compatibility scores. Dividing by \(\sqrt{d_k}\) prevents vanishing gradients in the softmax. In multi-head attention (12 heads), the model simultaneously attends to syntactic, semantic, and contextual relationships across multiple subspaces.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q3 -->
+                            <div class="accordion-item viva-item" data-keywords="data leakage validation test split seed imdb isolation">
+                                <h2 class="accordion-header" id="vq-h3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c3">
+                                        Q3: How was Data Leakage strictly prevented between splits?
+                                    </button>
+                                </h2>
+                                <div id="vq-c3" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        We implemented a zero-leakage protocol:
+                                        <ol>
+                                            <li>The 1,000 held-out test samples were carved exclusively from the official <code>stanfordnlp/imdb</code> test split.</li>
+                                            <li>The 2,000 training and 500 validation samples were sampled exclusively from the official training split.</li>
+                                            <li>Random seed <code>42</code> was pinned across Python, NumPy, PyTorch, and CUDA/MPS for exact split reproducibility.</li>
+                                            <li>Zero test texts or tokens were ever seen by the optimizer during model training or checkpoint selection.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q4 -->
+                            <div class="accordion-item viva-item" data-keywords="baseline untuned fine-tuned lift accuracy delta 44%">
+                                <h2 class="accordion-header" id="vq-h4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c4">
+                                        Q4: Why did the fine-tuned model achieve a +44.10% accuracy lift over the baseline?
+                                    </button>
+                                </h2>
+                                <div id="vq-c4" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        An untuned pretrained DistilBERT checkpoint has its classification head weights randomly initialized. Without domain fine-tuning, its predictions hover around random chance (or lower due to arbitrary head initialization bias, producing 40.00% accuracy on our held-out test split). Supervised fine-tuning with Cross-Entropy Loss adapts all 6 encoder blocks and calibrates the classification head, achieving <strong>84.10% accuracy</strong> (+44.10% lift) and an F1-score of <strong>0.8349</strong>.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q5 -->
+                            <div class="accordion-item viva-item" data-keywords="adamw weight decay learning rate warmup scheduling optimizer">
+                                <h2 class="accordion-header" id="vq-h5">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c5">
+                                        Q5: Why was AdamW with linear warmup chosen over standard SGD or Adam?
+                                    </button>
+                                </h2>
+                                <div id="vq-c5" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        Standard Adam applies L2 regularization to gradients, which distorts weight decay when combined with momentum. AdamW decouples weight decay (\(0.01\)) directly from gradient updates, stabilizing transformer optimization. The linear warmup (25 steps) prevents early large parameter updates from destroying rich pretrained transformer features, after which linear decay smoothly anneals the learning rate towards zero.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q6 -->
+                            <div class="accordion-item viva-item" data-keywords="wordpiece subword tokenization oov vocab out of vocabulary">
+                                <h2 class="accordion-header" id="vq-h6">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c6">
+                                        Q6: How does WordPiece tokenization solve Out-Of-Vocabulary (OOV) errors?
+                                    </button>
+                                </h2>
+                                <div id="vq-c6" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        WordPiece decomposes unknown words into frequent sub-word tokens with <code>##</code> prefixes (e.g., <code>"unforgettable"</code> &rarr; <code>["un", "##forget", "##table"]</code>). This guarantees that any arbitrary string can be represented without generating <code>[UNK]</code> tokens while maintaining a bounded vocabulary size (30,522 tokens).
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q7 -->
+                            <div class="accordion-item viva-item" data-keywords="softmax probability factual truth ethics calibration certainty">
+                                <h2 class="accordion-header" id="vq-h7">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c7">
+                                        Q7: Does high Softmax confidence imply factual certainty or objective truth?
+                                    </button>
+                                </h2>
+                                <div id="vq-c7" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        <strong>No.</strong> Softmax confidence reflects mathematical exponentiation of logit scores: \(\sigma(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}\). It measures the statistical alignment of token sequences with IMDb training patterns. Sarcasm, double negation, or out-of-domain text can yield high confidence despite incorrect or misleading predictions. Hence, calibration disclosures are essential in ethical AI engineering.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q8 -->
+                            <div class="accordion-item viva-item" data-keywords="encoder generative bert gpt llama plm comparison difference">
+                                <h2 class="accordion-header" id="vq-h8">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vq-c8">
+                                        Q8: How does an Encoder model (DistilBERT) differ from a Generative LLM (GPT/Llama)?
+                                    </button>
+                                </h2>
+                                <div id="vq-c8" class="accordion-collapse collapse" data-bs-parent="#vivaAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>DistilBERT (Encoder-only)</strong>: Uses bidirectional attention where each token sees past and future context simultaneously. Ideal for sequence classification, regression, and token labeling. Parameters: ~66M. Latency: &lt; 25ms.</li>
+                                            <li><strong>GPT / Llama (Decoder-only)</strong>: Uses causal masked attention where tokens can only attend to previous tokens. Ideal for autoregressive open-ended text generation. Parameters: 7B to 70B+. Requires significantly greater memory and compute.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================================================
+                 TAB 5: TOKEN ATTENTION & ETHICAL CALIBRATION
+                 ========================================================================== -->
+            <div class="tab-pane fade fade-in-up" id="pill-tokens" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Sub-Word Tokenizer Simulator -->
+                    <div class="col-lg-7">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-code-slash"></i> WordPiece Sub-Word Token Explorer
+                                </h3>
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle font-monospace">30,522 Vocab</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-secondary small mb-3">
+                                    Type any review fragment to simulate how the WordPiece tokenizer segments words into sub-word tokens with <code>[CLS]</code> and <code>[SEP]</code> boundaries:
+                                </p>
+                                <div class="mb-3">
+                                    <input type="text" id="token-test-input" class="form-control cyber-textarea" style="min-height: auto; padding: 10px 14px;" value="A breathtakingly visionary cinematic masterpiece!" oninput="simulateTokens()">
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="small text-muted font-monospace text-uppercase fw-bold">Token Stream:</span>
+                                    <span class="badge bg-secondary-subtle text-secondary font-monospace" id="token-count-chip">8 tokens</span>
+                                </div>
+                                <div class="token-container" id="token-stream-box">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                                <div class="mt-3 text-secondary small">
+                                    <i class="bi bi-info-circle text-info me-1"></i> Tokens highlighted in gold represent special sequence markers (<code>[CLS]</code> is used for sequence classification; <code>[SEP]</code> marks sequence ends). Sub-word tokens with <code>##</code> attach to preceding prefixes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Softmax Calibration Deep Dive -->
+                    <div class="col-lg-5">
+                        <div class="cyber-card h-100">
+                            <div class="card-header-cyber">
+                                <h3 class="card-title-cyber">
+                                    <i class="bi bi-shield-lock-fill"></i> Probability Calibration vs. Truth
+                                </h3>
+                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle font-monospace">Ethical AI</span>
+                            </div>
+                            <div class="p-4">
+                                <div class="p-3 mb-3 rounded-3" style="background: rgba(10, 16, 30, 0.9); border: 1px solid var(--border-subtle);">
+                                    <div class="small font-monospace text-info mb-1">Softmax Normalization:</div>
+                                    <div class="font-monospace small text-white">
+                                        $$P(y = 1 | x) = \frac{e^{z_1}}{e^{z_0} + e^{z_1}}$$
+                                    </div>
+                                </div>
+                                <p class="text-secondary small" style="line-height: 1.6;">
+                                    Cross-entropy training optimizes log-likelihood over the labeled training distribution. However, neural networks can be <em>overconfident</em> on out-of-distribution or adversarial inputs.
+                                </p>
+                                <ul class="text-secondary small ps-3" style="line-height: 1.6;">
+                                    <li><strong>Sarcasm vulnerability:</strong> "Oh great, another masterpiece of cinematic garbage" yields conflicting tokens.</li>
+                                    <li><strong>Confidence scores</strong> indicate classification probability, not factual truth.</li>
+                                    <li><strong>Safety bounds:</strong> In production systems, predictions with confidence below 70% are flagged for human-in-the-loop review.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         ETHICAL DISCLAIMER & CANDIDATE MODAL
+         ========================================================================== -->
+    <div class="modal fade" id="disclaimerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content cyber-card border border-secondary-subtle">
+                <div class="modal-header border-bottom border-light-subtle">
+                    <h5 class="modal-title text-white">
+                        <i class="bi bi-shield-check text-info me-2"></i>Academic Verification & Candidate Credentials
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-secondary">
+                    <div class="p-3 mb-3 rounded-3" style="background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25);">
+                        <h6 class="text-white fw-bold mb-2">Candidate Details</h6>
+                        <ul class="list-unstyled mb-0 font-monospace small">
+                            <li><strong>Student Name:</strong> <span class="text-info">Mahesh Kadam</span></li>
+                            <li><strong>Roll Number:</strong> <span class="text-info">51</span></li>
+                            <li><strong>PRN:</strong> <span class="text-info">202401120074</span></li>
+                            <li><strong>Department:</strong> Department of Data Science</li>
+                            <li><strong>Institution:</strong> MIT Academy of Engineering (MITAOE)</li>
+                            <li><strong>Academic Year:</strong> 2026-2027</li>
+                        </ul>
+                    </div>
+
+                    <h6 class="text-white fw-bold mt-3">Assignment Objectives & Architecture</h6>
+                    <p class="small">
+                        This application demonstrates the individual adaptation, fine-tuning, empirical evaluation, and full-stack web deployment of a pretrained <strong>DistilBERT</strong> transformer (<code>distilbert-base-uncased</code>, 66.9M parameters) on the benchmark <strong>IMDb Movie Reviews</strong> dataset.
+                    </p>
+
+                    <h6 class="text-white fw-bold mt-3">Empirical Rigor & Integrity</h6>
+                    <p class="small">
+                        Evaluation was conducted on a strictly isolated 1,000 held-out test split, achieving <strong>84.10% accuracy</strong> and <strong>0.8349 F1-score</strong> (+44.10% lift over the untuned baseline checkpoint). Zero test samples were used in training.
+                    </p>
+
+                    <h6 class="text-white fw-bold mt-3">Hardware Acceleration</h6>
+                    <p class="small mb-0">
+                        Inference executes on local hardware with PyTorch Metal Performance Shaders (MPS) / CUDA acceleration, ensuring fast response times without external cloud dependencies.
+                    </p>
+                </div>
+                <div class="modal-footer border-top border-light-subtle">
+                    <button type="button" class="btn btn-cyber-outline btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer class="cyber-footer text-center">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-2">
+                <span class="text-white fw-bold font-monospace">SENTINEL-NLP // REVIEW INTELLIGENCE</span>
+                <span class="text-muted">&bull;</span>
+                <span>Candidate: <strong class="text-info">Mahesh Kadam</strong> (Roll: <strong>51</strong> | PRN: <code class="text-info">202401120074</code>)</span>
+                <span class="text-muted">&bull;</span>
+                <span>Department of Data Science, MIT Academy of Engineering (MITAOE)</span>
+            </div>
+            <div class="text-muted small">
+                Individual Pretrained LLM Development & Technical Presentation &bull; Academic Year 2026-2027
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Application JS -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
