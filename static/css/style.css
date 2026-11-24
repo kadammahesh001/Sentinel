@@ -1,0 +1,862 @@
+/* ==========================================================================
+   REVIEW INTELLIGENCE COMMAND CENTER — NEXT-GEN CYBER LUXE DESIGN SYSTEM
+   Candidate: Mahesh Kadam (Roll 51, PRN: 202401120074)
+   MIT Academy of Engineering (MITAOE) • Department of Data Science
+   ========================================================================== */
+
+:root {
+    /* Color Palette - Obsidian Deep Base */
+    --bg-void: #05070d;
+    --bg-surface: #0a0f1d;
+    --bg-card: rgba(13, 20, 36, 0.75);
+    --bg-card-hover: rgba(18, 28, 52, 0.85);
+    --bg-glass-input: rgba(7, 12, 24, 0.85);
+
+    /* Borders & Accents */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-card: rgba(99, 102, 241, 0.2);
+    --border-card-hover: rgba(0, 240, 255, 0.4);
+
+    /* Neon Signals */
+    --neon-cyan: #00f0ff;
+    --neon-indigo: #6366f1;
+    --neon-violet: #8b5cf6;
+    --neon-emerald: #00f5a0;
+    --neon-rose: #ff3366;
+    --neon-amber: #ffb703;
+
+    /* Typography Gradients */
+    --grad-primary: linear-gradient(135deg, #00f0ff 0%, #6366f1 50%, #a855f7 100%);
+    --grad-positive: linear-gradient(135deg, #00f5a0 0%, #00b4d8 100%);
+    --grad-negative: linear-gradient(135deg, #ff3366 0%, #ff758c 100%);
+    --grad-card: linear-gradient(180deg, rgba(20, 30, 55, 0.6) 0%, rgba(10, 16, 32, 0.8) 100%);
+
+    /* Text Colors */
+    --text-pure: #ffffff;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-highlight: #38bdf8;
+
+    /* Fonts */
+    --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Glows & Shadows */
+    --glow-cyan: 0 0 25px rgba(0, 240, 255, 0.25);
+    --glow-emerald: 0 0 25px rgba(0, 245, 160, 0.25);
+    --glow-rose: 0 0 25px rgba(255, 51, 102, 0.25);
+    --glow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+}
+
+/* Base Body with Aurora Mesh */
+body {
+    background-color: var(--bg-void);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(0, 240, 255, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(0, 245, 160, 0.08) 0px, transparent 60%),
+        radial-gradient(at 80% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    min-height: 100vh;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-void);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-cyan);
+}
+
+/* ==========================================================================
+   NAVBAR & TELEMETRY HEADER
+   ========================================================================== */
+.custom-nav {
+    background: rgba(8, 12, 24, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.brand-icon-wrapper {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00f0ff, #6366f1);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.brand-icon-wrapper i {
+    font-size: 1.4rem;
+    color: #fff;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.brand-title {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+    background: var(--grad-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.brand-subtitle {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Student Badge Pill */
+.student-pill {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.15), rgba(0, 240, 255, 0.1));
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: #e2e8f0;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    border-radius: 30px;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+}
+.student-pill:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+    transform: translateY(-1px);
+}
+.student-pill .avatar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+    animation: pulseGlow 2s infinite;
+}
+
+/* Live Status Indicator */
+.telemetry-chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.telemetry-live {
+    background: rgba(0, 245, 160, 0.12);
+    color: var(--neon-emerald);
+    border: 1px solid rgba(0, 245, 160, 0.3);
+    box-shadow: 0 0 15px rgba(0, 245, 160, 0.2);
+}
+.telemetry-metrics {
+    background: rgba(99, 102, 241, 0.12);
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+/* ==========================================================================
+   NAVIGATION COMMAND DOCK
+   ========================================================================== */
+.command-dock-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.command-dock {
+    background: rgba(13, 20, 36, 0.85);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--border-subtle);
+    padding: 6px;
+    border-radius: 18px;
+    display: inline-flex;
+    gap: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.command-dock .nav-link {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+}
+
+.command-dock .nav-link:hover {
+    color: var(--text-pure);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.command-dock .nav-link.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(0, 240, 255, 0.8));
+    border-color: var(--neon-cyan);
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   GLASS CARDS & CONTAINERS
+   ========================================================================== */
+.cyber-card {
+    background: var(--bg-card);
+    background-image: var(--grad-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glow-card);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+.cyber-card:hover {
+    border-color: var(--border-card-hover);
+    box-shadow: 0 12px 35px -5px rgba(0, 240, 255, 0.15);
+}
+
+.card-header-cyber {
+    background: transparent;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title-cyber {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.card-title-cyber i {
+    color: var(--neon-cyan);
+    font-size: 1.25rem;
+}
+
+/* ==========================================================================
+   INPUTS & TEXTAREAS
+   ========================================================================== */
+.cyber-textarea {
+    background-color: var(--bg-glass-input) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    transition: all 0.25s ease;
+    resize: vertical;
+    min-height: 150px;
+    font-family: var(--font-heading);
+}
+
+.cyber-textarea:focus {
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.25) !important;
+    background-color: rgba(5, 9, 20, 0.95) !important;
+}
+
+/* Sample Quick-Load Chips */
+.sample-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.sample-chip:hover {
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.sample-chip.chip-pos {
+    border-color: rgba(0, 245, 160, 0.3);
+    color: #34d399;
+}
+.sample-chip.chip-pos:hover {
+    background: rgba(0, 245, 160, 0.2);
+    box-shadow: 0 0 15px rgba(0, 245, 160, 0.3);
+}
+
+.sample-chip.chip-neg {
+    border-color: rgba(255, 51, 102, 0.3);
+    color: #ff6b8b;
+}
+.sample-chip.chip-neg:hover {
+    background: rgba(255, 51, 102, 0.2);
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+}
+
+.sample-chip.chip-mixed {
+    border-color: rgba(255, 183, 3, 0.3);
+    color: #fbbf24;
+}
+.sample-chip.chip-mixed:hover {
+    background: rgba(255, 183, 3, 0.2);
+    box-shadow: 0 0 15px rgba(255, 183, 3, 0.3);
+}
+
+.sample-chip.chip-sarcastic {
+    border-color: rgba(168, 85, 247, 0.3);
+    color: #c084fc;
+}
+.sample-chip.chip-sarcastic:hover {
+    background: rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+/* ==========================================================================
+   BUTTONS & ACTIONS
+   ========================================================================== */
+.btn-cyber-primary {
+    background: linear-gradient(135deg, #00f0ff 0%, #6366f1 100%);
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 26px;
+    border-radius: 12px;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-cyber-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 240, 255, 0.5);
+    color: #fff;
+}
+
+.btn-cyber-outline {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-cyber-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--neon-cyan);
+    color: #fff;
+}
+
+/* ==========================================================================
+   VERDICT HERO & PROBABILITY GAUGES
+   ========================================================================== */
+.verdict-hero-card {
+    background: linear-gradient(180deg, rgba(16, 25, 48, 0.9) 0%, rgba(10, 16, 32, 0.95) 100%);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Speedometer / Gauge Container */
+.gauge-wrapper {
+    position: relative;
+    width: 220px;
+    height: 125px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.gauge-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.verdict-badge-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.verdict-badge-box.verdict-pos {
+    background: linear-gradient(135deg, rgba(0, 245, 160, 0.18), rgba(0, 180, 216, 0.25));
+    border: 1px solid var(--neon-emerald);
+    color: var(--neon-emerald);
+    box-shadow: 0 0 30px rgba(0, 245, 160, 0.3);
+}
+
+.verdict-badge-box.verdict-neg {
+    background: linear-gradient(135deg, rgba(255, 51, 102, 0.18), rgba(220, 38, 38, 0.25));
+    border: 1px solid var(--neon-rose);
+    color: var(--neon-rose);
+    box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+}
+
+/* Cyber Probability Bars */
+.prob-meter-box {
+    background: rgba(10, 15, 28, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 1rem;
+}
+
+.prob-meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.prob-progress {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.prob-bar-pos {
+    height: 100%;
+    background: linear-gradient(90deg, #00b4d8, #00f5a0);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 245, 160, 0.5);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prob-bar-neg {
+    height: 100%;
+    background: linear-gradient(90deg, #ff758c, #ff3366);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Telemetry Grid inside Inference */
+.telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 1.25rem;
+}
+
+.telemetry-item {
+    background: rgba(10, 16, 30, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: left;
+}
+
+.telemetry-item-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.telemetry-item-value {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-pure);
+}
+
+/* ==========================================================================
+   KPI CARDS (BATCH & BENCHMARK)
+   ========================================================================== */
+.stat-cyber-card {
+    background: linear-gradient(180deg, rgba(16, 25, 48, 0.7) 0%, rgba(10, 16, 32, 0.85) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 18px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.stat-cyber-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 240, 255, 0.15);
+}
+
+.stat-cyber-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-cyber-value {
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.stat-cyber-delta {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.delta-positive {
+    background: rgba(0, 245, 160, 0.15);
+    color: var(--neon-emerald);
+    border: 1px solid rgba(0, 245, 160, 0.3);
+}
+
+.delta-neutral {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+/* ==========================================================================
+   DROPZONE & CSV UPLOAD
+   ========================================================================== */
+.cyber-dropzone {
+    border: 2px dashed rgba(99, 102, 241, 0.3);
+    border-radius: 18px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    background: rgba(8, 14, 28, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cyber-dropzone:hover, .cyber-dropzone.dragover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+}
+
+.dropzone-icon {
+    font-size: 3rem;
+    color: var(--neon-cyan);
+    margin-bottom: 1rem;
+    display: inline-block;
+    filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4));
+}
+
+/* ==========================================================================
+   DATA TABLES & LEDGER
+   ========================================================================== */
+.cyber-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-primary);
+    font-size: 0.88rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.cyber-table thead th {
+    background: rgba(13, 20, 36, 0.85);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 14px 18px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.cyber-table tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+}
+
+.cyber-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.cyber-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Sentiment Badges */
+.badge-pos {
+    background: rgba(0, 245, 160, 0.12);
+    color: var(--neon-emerald);
+    border: 1px solid rgba(0, 245, 160, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.badge-neg {
+    background: rgba(255, 51, 102, 0.12);
+    color: var(--neon-rose);
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   CONFUSION MATRIX QUADRANTS
+   ========================================================================== */
+.cm-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 1rem;
+}
+
+.cm-cell {
+    background: rgba(13, 20, 36, 0.7);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.cm-cell:hover {
+    transform: scale(1.02);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.cm-cell.tn {
+    border-left: 4px solid var(--neon-emerald);
+}
+.cm-cell.tp {
+    border-left: 4px solid var(--neon-emerald);
+}
+.cm-cell.fp {
+    border-left: 4px solid var(--neon-rose);
+}
+.cm-cell.fn {
+    border-left: 4px solid var(--neon-amber);
+}
+
+.cm-val {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.cm-lbl {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   VIVA QUESTIONS ACCORDION
+   ========================================================================== */
+.cyber-accordion .accordion-item {
+    background: rgba(13, 20, 36, 0.65);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px !important;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.cyber-accordion .accordion-button {
+    background: transparent;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 1.1rem 1.4rem;
+    box-shadow: none;
+    border: none;
+}
+
+.cyber-accordion .accordion-button:not(.collapsed) {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.15), rgba(0, 240, 255, 0.1));
+    color: var(--neon-cyan);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.cyber-accordion .accordion-button::after {
+    filter: invert(1) brightness(0.8);
+}
+
+.cyber-accordion .accordion-body {
+    padding: 1.25rem 1.4rem;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    background: rgba(8, 12, 24, 0.4);
+}
+
+/* ==========================================================================
+   TOKEN INSPECTOR & EXPLAINABILITY
+   ========================================================================== */
+.token-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px;
+    background: var(--bg-glass-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    min-height: 60px;
+}
+
+.token-chip {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #c7d2fe;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+.token-chip:hover {
+    background: rgba(0, 240, 255, 0.25);
+    border-color: var(--neon-cyan);
+    color: #fff;
+    transform: translateY(-2px);
+}
+.token-chip.token-cls, .token-chip.token-sep {
+    background: rgba(255, 183, 3, 0.15);
+    border-color: rgba(255, 183, 3, 0.4);
+    color: #fde047;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.cyber-footer {
+    border-top: 1px solid var(--border-subtle);
+    background: rgba(6, 9, 18, 0.9);
+    padding: 2.5rem 1.5rem;
+    margin-top: 4rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.cyber-footer a {
+    color: var(--text-highlight);
+    text-decoration: none;
+}
+.cyber-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
